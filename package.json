@@ -4,7 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "nodemon main.js"
+    "start": "nodemon app.js"
   },
   "keywords": [],
   "author": "Aliyan Ahmed",
