@@ -1,10 +1,51 @@
 <%- include('layouts/header') %>
 
 
-<div class="container">
+<div class="container my-5">
     <div class="row">
         <div class="col-lg-12">
-            <h1>home content</h1>
+            <% if (message) { %>
+                <div id="autoCloseAlert" class="alert fade show alert-<%= message.type %>" role="alert">
+                    <strong> <%= message.message %> </strong>
+                </div>
+            <% } else { %>
+                <div class="container"></div>
+            <% } %>
+            <div class="table-responsive">
+                <% if (users != '') { %>
+                    <table class="table table-stipped text-center border rounded my-5">
+                        <thead class="">
+                            <tr class="bg-dark">
+                                <th class="bg-dark text-white">ID</th>
+                                <th class="bg-dark text-white">Image</th>
+                                <th class="bg-dark text-white">Name</th>
+                                <th class="bg-dark text-white">Email</th>
+                                <th class="bg-dark text-white">Phone</th>
+                                <th class="bg-dark text-white">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% users.forEach((row, index) => { %>
+                                <tr>
+                                    <td class="align-middle"><%= index+1 %></td>
+                                    <td class="align-middle"><img src="<%= row.image %>" width="100" class="image-thumbnail"></td>
+                                    <td class="align-middle"><%= row.name %></td>
+                                    <td class="align-middle"><%= row.email %></td>
+                                    <td class="align-middle"><%= row.phone %></td>
+                                    <td class="align-middle">
+                                        <a href="/edit/<%= row._id %>" class="text-success"><i class="fa fa-edit mx-1"></i></a>
+                                        <a href="/delete/<%= row._id %>" class="text-danger"><i class="fa fa-trash mx-1"></i></a>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table> 
+                <% } else { %>
+                    <h1 class="text-center text-secondary mt-5">No user found</h1>
+                <% } %>
+
+                
+            </div>
         </div>
     </div>
 </div>

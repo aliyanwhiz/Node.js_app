@@ -17,6 +17,7 @@ db.once('open', () => console.log('connection is established !'))
 // middleware
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
+app.use(express.static('assets/userImages'))
 app.use(session({
     secret: "my secret key",
     saveUninitialized: true,
@@ -32,7 +33,7 @@ app.use((req, res, next) => {
 app.set("view engine", "ejs")
 
 // methods
-app.use('', require('./routes/routes'))
+app.use('/', require('./routes/routes'))
 
 
 app.listen(PORT, () => console.log(`servere is running on http://localhost:${PORT}`))

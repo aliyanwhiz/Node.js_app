@@ -1,10 +1,42 @@
 <%- include('layouts/header') %>
 
 
-<div class="container">
+<div class="container my-5">
     <div class="row">
-        <div class="col-lg-12">
-            <h1>add user content</h1>
+        <div class="container register-form">
+            <div class="form">
+                <div class="note bg-dark pt-3">
+                    <h1>Add user</h1>
+                </div>
+
+                <div class="form-content">
+                    <form action="/add" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Your Name" name="name"/>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" placeholder="Your email" name="email"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="number" class="form-control" placeholder="Your contact number" name="phone"/>
+                                </div>
+                                <div class="form-group">
+                                    <input type="file" class="form-control" placeholder="upload your image" name="image"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="submit" class="btnSubmit w-100" value="submit">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
