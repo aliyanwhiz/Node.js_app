@@ -57,11 +57,27 @@ router.get('/', (req, res) => {
         });
 });
 
-
-
-
 router.get('/add', (req, res) => {
     res.render('add-user',{title : "add user Page"})
 })
+
+// adding edit route
+router.get('/edit/:id', async (req, res) => {
+    try {
+        let id = req.params.id;
+        let user = await users.findById(id);
+        if (user == null) {
+            res.redirect('/');
+        } else {
+            res.render('edit-user', {
+                title: 'Edit User',
+                user: user,
+            });
+        }
+    } catch (err) {
+        console.error(err);
+        res.redirect('/');
+    }
+});
 
 module.exports = router
