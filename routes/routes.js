@@ -3,6 +3,7 @@ const session = require('express-session')
 const router = express.Router();
 const multer = require("multer");
 const users = require('../models/users');
+const fs = require('fs')
 
 // uplaoding image using multer
 let storage = multer.diskStorage({
@@ -79,5 +80,40 @@ router.get('/edit/:id', async (req, res) => {
         res.redirect('/');
     }
 });
+
+router.post('/update/:id', upload, async (req, res) => {
+    let id = req.params.id;
+    let new_image = "";
+    if (req.file) {
+        new_image = req.file.filename;
+        try {
+            fs.unlinkSync('./assets/userImages/' + req.body.old_image);
+        } catch (err) {
+            console.log(err);
+        }
+    } else {
+        new_image = req.body.old_image;
+    }
+
+    try {
+            await users.findByIdAndUpdate(id, {
+            name: req.body.name,
+            email: req.body.email,
+            phone: req.body.phone,
+            image: new_image
+        });
+        req.session.message = {
+            type: "success",
+            message: "User updated successfully"
+        };
+        res.redirect('/');
+    } catch (err) {
+        res.json({ message: err.message, type: "danger" });
+    }
+});
+
+
+// adding delete route
+
 
 module.exports = router
