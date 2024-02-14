@@ -11,7 +11,7 @@ let storage = multer.diskStorage({
         cb(null,'./assets/userImages')
     },
     filename: function(req, file, cb){
-        cb(null, file.fieldname+"_"+Date.now+"_"+file.originalname)
+        cb(null, file.fieldname+"_"+ Date.now() +"_"+file.originalname)
     },
 })
 let upload = multer({
@@ -114,6 +114,30 @@ router.post('/update/:id', upload, async (req, res) => {
 
 
 // adding delete route
+
+router.get('/delete/:id', async (req, res) => {
+    try {
+        let id = req.params.id;
+        let result = await users.findByIdAndDelete(id);
+
+        if (result && result.image !== '') {
+            try {
+                fs.unlinkSync('./assets/userImages/' + result.image);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+        req.session.message = {
+            type: "info",
+            message: "User deleted successfully"
+        };
+        res.redirect('/');
+    } catch (err) {
+        res.json({ message: err.message });
+    }
+});
+
 
 
 module.exports = router
